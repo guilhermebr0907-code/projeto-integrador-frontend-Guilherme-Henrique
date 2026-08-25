@@ -1,33 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projeto integrador</title>
+    <body style="background-color: rgb(33, 33, 33);"></body>
     <style>
 table, th, td {
-  border: 1px solid black;
+  border: 1px solid rgb(255, 255, 255);
   border-collapse: collapse;
+  color: rgb(255, 255, 255);
 }
 </style>
 </head>
 <body>
-    <h1>FutBrasil</h1>
-    <p>Transformar pesquisas sobre futebol muito mais interativas</p>
-    <img src="assets/images/brasileiro serie A.png" alt="Brasileirao serie A logo" height="40" width="35">
-    <img src="assets/images/brasileiro serie B.png" alt="Brasileirao serie B logo" height="40" width="40">
-    <img src="assets/images/brasileiro serie C.png" alt="Brasileirao serie C logo" height="40" width="35">
-    <img src="assets/images/brasileiro serie D.png" alt="Brasileirao serie D logo" height="40" width="35">
+  <header>
+    <h1 style="color: rgb(255, 255, 255);">FutBrasil</h1>
+    <p style="color: rgb(255, 255, 255);">Transformar pesquisas sobre futebol muito mais interativas</p>
+  </header>
 
-
-
-    <ul style="list-style-type:disc">
+  <main>
+    <section id="divisoes">
+      <h2 style="color: rgb(255, 255, 255);">As 4 divisões do futebol brasileiro</h2>
+    <img src="assets/images/brasileiro-serie-a.png" alt="Brasileirao serie A logo" height="40" width="35">
+    <img src="assets/images/brasileiro-serie-b.png" alt="Brasileirao serie B logo" height="40" width="40">
+    <img src="assets/images/brasileiro-serie-c.png" alt="Brasileirao serie C logo" height="40" width="35">
+    <img src="assets/images/brasileiro-serie-d.png" alt="Brasileirao serie D logo" height="40" width="35">
+  
+    <ul style="list-style-type:disc; color: rgb(255, 255, 255);">
         <li>Serie A</li>
         <li>Serie B</li>
         <li>Serie C</li>
         <li>Serie D</li>
-</ul>
-    <p>Os 3 times com mais dívidas no ano de 2025:</p>
+    </section>
+
+    <section id="dividas">
+      </ul>
+    <h2 style="color: rgb(255, 255, 255);">Os 3 times com mais dívidas no ano de 2025</h2>
     <table>
   <tr>
     <th>Times</th>
@@ -46,9 +55,77 @@ table, th, td {
     <td>R$2,45BI</td>
   </tr>
 </table>
+</section>
+<section id="inscricao">
+  <h2 style="color: rgb(255, 255, 255);">Inscrição de jogador</h2>
+
+  <form action="/inscrever" method="post">
+    <fieldset>
+      <legend style="color: rgb(255, 255, 255);">Dados do Jogador</legend>
+
+      <div>
+        <label for="nome" style="color: rgb(255, 255, 255);">Nome completo:</label>
+        <input type="text" id="nome" name="nome" required minlength="3">
+      </div>
+
+      <div>
+        <label for="email" style="color: rgb(255, 255, 255);">E-mail:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div>
+        <label for="idade" style="color: rgb(255, 255, 255);">Idade:</label>
+        <input type="number" id="idade" name="idade" min="16" max="45" required>
+      </div>
+
+      <div>
+        <label for="telefone" style="color: rgb(255, 255, 255);">Telefone/WhatsApp:</label>
+        <input type="tel" id="telefone" name="telefone"
+               pattern="\(\d{2}\)\s\d{4,5}-\d{4}"
+               placeholder="(83) 99999-9999">
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend style="color: rgb(255, 255, 255);">Dados do Time</legend>
+
+      <div>
+        <label for="time" style="color: rgb(255, 255, 255);">Time do coração:</label>
+        <select id="time" name="time">
+          <option value="Sport" style="color: rgb(255, 255, 255);">Sport</option>
+          <option value="Remo" style="color: rgb(255, 255, 255);">Remo</option>
+          <option value="Crisciúma" style="color: rgb(255, 255, 255);">Crisciúma</option>
+          <option value="Cuiabá" style="color: rgb(255, 255, 255);">Cuiabá</option>
+          <option value="Guarani" style="color: rgb(255, 255, 255);">Guarani</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="posicao" style="color: rgb(255, 255, 255);">Posição em campo:</label>
+        <select id="posicao" name="posicao">
+          <option value="goleiro" style="color: rgb(255, 255, 255);">Goleiro</option>
+          <option value="Defensor" style="color: rgb(255, 255, 255);">Defensor</option>
+          <option value="meio-campo" style="color: rgb(255, 255, 255);">Meio-campo</option>
+          <option value="atacante" style="color: rgb(255, 255, 255);">Atacante</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="observacoes" style="color: rgb(255, 255, 255);">Observações:</label>
+        <textarea id="observacoes" name="observacoes" rows="4"
+                   placeholder="Alguma lesão, restrição ou observação relevante?"></textarea>
+      </div>
+    </fieldset>
+
+    <button type="submit" >Confirmar inscrição</button>
+  </form>
+</section>
+</main>
+<footer>
 <a href="https://ge.globo.com/pe/futebol/noticia/2026/06/03/dividas-dos-clubes-brasileiros-11-times-superam-r-1-bilhao-veja-ranking.ghtml" target="_blank" rel="noopener noreferrer">
     Acompanhe a lista
 </a>
+</footer>
 </body>
 </html> 
 
