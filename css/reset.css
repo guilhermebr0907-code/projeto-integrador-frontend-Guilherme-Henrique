@@ -1,0 +1,59 @@
+/* ==========================================================================
+   reset.css — normalização básica
+   Objetivo: zerar diferenças entre navegadores antes de aplicar o tema.
+   Este arquivo deve ser carregado ANTES de style.css no index.html.
+   ========================================================================== */
+
+/* box-sizing global: o seletor universal cobre todos os elementos e os
+   pseudoelementos ::before/::after, que não são alcançados por "*" sozinho.
+   Com border-box, padding e border passam a ser contados DENTRO da largura
+   declarada — é o que torna o box model previsível no resto do projeto. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remoção das margens/padding padrão do body (o navegador aplica ~8px de
+   margin por conta própria, o que cria uma faixa branca indesejada). */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Zera margens de blocos de texto e listas para que todo espaçamento
+   venha das variáveis definidas em style.css, e não do user-agent. */
+h1, h2, h3, h4, h5, h6,
+p, figure, blockquote, dl, dd {
+  margin: 0;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0;
+}
+
+/* Imagens não devem estourar o container em telas pequenas. */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Formulários não herdam a fonte do body por padrão. */
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+/* Respeita quem prefere menos animação (acessibilidade). */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
