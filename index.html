@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
+<head></head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projeto integrador</title>
@@ -64,70 +64,54 @@ table, th, td {
   </tr>
 </table>
 </section>
-<section id="inscricao">
-  <h2 style="color: rgb(255, 255, 255);">Inscrição de jogador</h2>
 
-  <form action="/inscrever" method="post">
-    <fieldset>
-      <legend style="color: rgb(255, 255, 255);">Dados do Jogador</legend>
+<section id="login">
 
-      <div>
-        <label for="nome" style="color: rgb(255, 255, 255);">Nome completo:</label>
-        <input type="text" id="nome" name="nome" required minlength="3">
-      </div>
+    <h2 style="color: rgb(255, 255, 255);">Login</h2>
 
-      <div>
-        <label for="email" style="color: rgb(255, 255, 255);">E-mail:</label>
-        <input type="email" id="email" name="email" required>
-      </div>
+    <form id="formCadastro">
 
-      <div>
-        <label for="idade" style="color: rgb(255, 255, 255);">Idade:</label>
-        <input type="number" id="idade" name="idade" min="16" max="45" required>
-      </div>
+        <fieldset>
+            <legend style="color: rgb(255, 255, 255);">Gostaríamos de saber mais sobre você</legend>
 
-      <div>
-        <label for="telefone" style="color: rgb(255, 255, 255);">Telefone/WhatsApp:</label>
-        <input type="tel" id="telefone" name="telefone"
-               pattern="\(\d{2}\)\s\d{4,5}-\d{4}"
-               placeholder="(83) 99999-9999">
-      </div>
-    </fieldset>
+            <div>
+                <label style="color: rgb(255, 255, 255);" for="nome">Como podemos te chamar?</label>
+                <input type="text" id="nome" name="nome"
+                    required minlength="3">
+            </div>
 
-    <fieldset>
-      <legend style="color: rgb(255, 255, 255);">Dados do Time</legend>
+            <div>
+                <label style="color: rgb(255, 255, 255);" for="email">Qual seu email?</label>
+                <input type="email" id="email" name="email" required>
+            </div>
 
-      <div>
-        <label for="time" style="color: rgb(255, 255, 255);">Time do coração:</label>
-        <select id="time" name="time">
-          <option value="Sport" style="color: rgb(255, 255, 255);">Sport</option>
-          <option value="Remo" style="color: rgb(255, 255, 255);">Remo</option>
-          <option value="Crisciúma" style="color: rgb(255, 255, 255);">Crisciúma</option>
-          <option value="Cuiabá" style="color: rgb(255, 255, 255);">Cuiabá</option>
-          <option value="Guarani" style="color: rgb(255, 255, 255);">Guarani</option>
-        </select>
-      </div>
+            <div>
+                <label style="color: rgb(255, 255, 255);" for="divisao">Qual divisão você acompanha mais?</label>
+                <select id="divisao" name="divisao" required>
+                    <option value="">Selecione</option>
+                    <option value="Serie A">Série A</option>
+                    <option value="Serie B">Série B</option>
+                    <option value="Serie C">Série C</option>
+                    <option value="Serie D">Série D</option>
+                </select>
+            </div>
 
-      <div>
-        <label for="posicao" style="color: rgb(255, 255, 255);">Posição em campo:</label>
-        <select id="posicao" name="posicao">
-          <option value="goleiro" style="color: rgb(255, 255, 255);">Goleiro</option>
-          <option value="Defensor" style="color: rgb(255, 255, 255);">Defensor</option>
-          <option value="meio-campo" style="color: rgb(255, 255, 255);">Meio-campo</option>
-          <option value="atacante" style="color: rgb(255, 255, 255);">Atacante</option>
-        </select>
-      </div>
+            <div>
+                <label style="color: rgb(255, 255, 255);" for="time">Qual é o seu time do coração?</label>
+                <input type="text" id="time" name="time"
+                    required minlength="3">
+                </select>
+            </div>
+        </fieldset>
 
-      <div>
-        <label for="observacoes" style="color: rgb(255, 255, 255);">Observações:</label>
-        <textarea id="observacoes" name="observacoes" rows="4"
-                   placeholder="Alguma lesão, restrição ou observação relevante?"></textarea>
-      </div>
-    </fieldset>
+        <button type="submit">Fazer cadastro</button>
 
-    <button type="submit" >Confirmar inscrição</button>
-  </form>
+        <p id="mensagem"></p>
+
+    </form>
 </section>
+
+<script src="script.js"></script>
 </main>
 <footer>
 <a href="https://ge.globo.com/pe/futebol/noticia/2026/06/03/dividas-dos-clubes-brasileiros-11-times-superam-r-1-bilhao-veja-ranking.ghtml" target="_blank" rel="noopener noreferrer">
