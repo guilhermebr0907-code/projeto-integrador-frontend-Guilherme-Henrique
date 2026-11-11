@@ -1,123 +1,118 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head></head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projeto integrador</title>
-    <body style="background-color: rgb(33, 33, 33);"></body>
-    <style>
-table, th, td {
-  border: 1px solid rgb(255, 255, 255);
-  border-collapse: collapse;
-  color: rgb(255, 255, 255);
-}
-</style>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FutBrasil — Projeto Integrador</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <header>
-    <h1 style="color: rgb(255, 255, 255);">FutBrasil</h1>
-    <p style="color: rgb(255, 255, 255);">Transformar pesquisas sobre futebol muito mais interativas</p>
+  <div class="cursor-glow" aria-hidden="true"></div>
+
+  <header class="topo">
+    <nav class="menu">
+      <a href="#inicio" class="logo">Fut<span>Brasil</span></a>
+      <ul>
+        <li><a href="#divisoes">Divisões</a></li>
+        <li><a href="#dividas">Dívidas</a></li>
+        <li><a href="#analise">Análise</a></li>
+        <li><a href="#desempenho">Desempenho</a></li>
+        <li><a href="#login">Cadastro</a></li>
+      </ul>
+    </nav>
+    <section id="inicio" class="hero">
+      <h1>FutBrasil</h1>
+      <p>Transformar pesquisas sobre futebol muito mais interativas</p>
+      <a href="#analise" class="btn btn-primario btn-magnetico">Começar análise</a>
+    </section>
   </header>
 
   <main>
-    <section id="divisoes">
-      <h2 style="color: rgb(255, 255, 255);">As 4 divisões do futebol brasileiro</h2>
-    <img src="assets/images/brasileiro serie A.png" alt="Brasileirao serie A logo" height="40" width="35">
-    <img src="assets/images/brasileiro serie B.png" alt="Brasileirao serie B logo" height="40" width="40">
-    <img src="assets/images/brasileiro serie C.png" alt="Brasileirao serie C logo" height="40" width="35">
-    <img src="assets/images/brasileiro serie D.png" alt="Brasileirao serie D logo" height="40" width="35">
-  
-    <ul style="list-style-type:disc; color: rgb(255, 255, 255);">
-        <li>Serie A</li>
-        <li>Serie B</li>
-        <li>Serie C</li>
-        <li>Serie D</li>
-
-      <video controls preload="none" width="300">    
+    <section id="divisoes" class="secao revelar">
+      <h2>As 4 divisões do futebol brasileiro</h2>
+      <div class="grade-divisoes">
+        <article class="cartao inclinar"><img src="assets/images/brasileiro serie A.png" alt="Logo Série A"><h3>Série A</h3></article>
+        <article class="cartao inclinar"><img src="assets/images/brasileiro serie B.png" alt="Logo Série B"><h3>Série B</h3></article>
+        <article class="cartao inclinar"><img src="assets/images/brasileiro serie C.png" alt="Logo Série C"><h3>Série C</h3></article>
+        <article class="cartao inclinar"><img src="assets/images/brasileiro serie D.png" alt="Logo Série D"><h3>Série D</h3></article>
+      </div>
+      <video controls preload="none" class="video">
         <source src="assets/videos/bora bora bora.mp4" type="video/mp4">
-        <source src="assets/videos/bora bora bora.webm" type="video/webm">
-        <source src="assets/videos/bora bora bora.ogv" type="video/ogg">
-        <p>Seu navegador não suporta o elemento de vídeo. <a href="assets/videos/bora bora bora.mp4">Baixe o
-        vídeo</a>.</p>
+        <p>Seu navegador não suporta vídeo. <a href="assets/videos/bora bora bora.mp4">Baixe o vídeo</a>.</p>
       </video>
     </section>
 
-    <section id="dividas">
-      </ul>
-    <h2 style="color: rgb(255, 255, 255);">Os 3 times com mais dívidas no ano de 2025</h2>
-    <table>
-  <tr>
-    <th>Times</th>
-    <th>Dívida</th>
-  </tr>
-  <tr>
-    <td>Corinthians</td>
-    <td>R$2,75BI</td>
-  </tr>
-  <tr>
-    <td>Atlético-MG</td>
-    <td>R$2,66BI</td>
-  </tr>
-  <tr>
-    <td>São Paulo</td>
-    <td>R$2,45BI</td>
-  </tr>
-</table>
-</section>
+    <section id="dividas" class="secao revelar">
+      <h2>Os 3 times com mais dívidas em 2025</h2>
+      <table class="tabela">
+        <thead><tr><th>Time</th><th>Dívida</th></tr></thead>
+        <tbody>
+          <tr><td>Corinthians</td><td>R$ 2,75 bi</td></tr>
+          <tr><td>Atlético-MG</td><td>R$ 2,66 bi</td></tr>
+          <tr><td>São Paulo</td><td>R$ 2,45 bi</td></tr>
+        </tbody>
+      </table>
+      <a class="btn btn-contorno" href="https://ge.globo.com/pe/futebol/noticia/2026/06/03/dividas-dos-clubes-brasileiros-11-times-superam-r-1-bilhao-veja-ranking.ghtml" target="_blank" rel="noopener noreferrer">Ver lista completa</a>
+    </section>
 
-<section id="login">
+    <!-- Aula 09: lógica com prompt, if/else, switch, for...of, do...while -->
+    <section id="analise" class="secao revelar">
+      <h2>Analisador de dívidas <small>Aula 09</small></h2>
+      <p>Clique no botão, responda as perguntas e veja o resultado aqui e no Console (F12).</p>
+      <div class="acoes">
+        <button type="button" id="btnAnalisar" class="btn btn-primario btn-magnetico">Rodar análise</button>
+        <button type="button" id="btnMenu" class="btn btn-contorno">Menu interativo</button>
+      </div>
+      <pre id="saidaLogica" class="saida">O resultado aparecerá aqui.</pre>
+    </section>
 
-    <h2 style="color: rgb(255, 255, 255);">Login</h2>
+    <!-- Aula 11: funções, map/filter/reduce e DOM -->
+    <section id="desempenho" class="secao revelar">
+      <h2>Desempenho dos clubes <small>Aula 11</small></h2>
+      <div class="filtros" id="filtros">
+        <button type="button" class="btn btn-chip ativo" data-faixa="todos">Todos</button>
+        <button type="button" class="btn btn-chip" data-faixa="faixa-alto">Alto</button>
+        <button type="button" class="btn btn-chip" data-faixa="faixa-medio">Médio</button>
+        <button type="button" class="btn btn-chip" data-faixa="faixa-baixo">Baixo</button>
+      </div>
+      <p id="resumo" class="resumo"></p>
+      <section id="resultado" class="grade-resultado"></section>
+    </section>
 
-    <form id="formCadastro">
-
+    <section id="login" class="secao revelar">
+      <h2>Cadastro</h2>
+      <form id="formCadastro">
         <fieldset>
-            <legend style="color: rgb(255, 255, 255);">Gostaríamos de saber mais sobre você</legend>
-
-            <div>
-                <label style="color: rgb(255, 255, 255);" for="nome">Como podemos te chamar?</label>
-                <input type="text" id="nome" name="nome"
-                    required minlength="3">
-            </div>
-
-            <div>
-                <label style="color: rgb(255, 255, 255);" for="email">Qual seu email?</label>
-                <input type="email" id="email" name="email" required>
-            </div>
-
-            <div>
-                <label style="color: rgb(255, 255, 255);" for="divisao">Qual divisão você acompanha mais?</label>
-                <select id="divisao" name="divisao" required>
-                    <option value="">Selecione</option>
-                    <option value="Serie A">Série A</option>
-                    <option value="Serie B">Série B</option>
-                    <option value="Serie C">Série C</option>
-                    <option value="Serie D">Série D</option>
-                </select>
-            </div>
-
-            <div>
-                <label style="color: rgb(255, 255, 255);" for="time">Qual é o seu time do coração?</label>
-                <input type="text" id="time" name="time"
-                    required minlength="3">
-                </select>
-            </div>
+          <legend>Gostaríamos de saber mais sobre você</legend>
+          <label for="nome">Como podemos te chamar?</label>
+          <input type="text" id="nome" name="nome" required minlength="3">
+          <label for="email">Qual seu email?</label>
+          <input type="email" id="email" name="email" required>
+          <label for="divisao">Qual divisão você acompanha mais?</label>
+          <select id="divisao" name="divisao" required>
+            <option value="">Selecione</option>
+            <option value="Serie A">Série A</option>
+            <option value="Serie B">Série B</option>
+            <option value="Serie C">Série C</option>
+            <option value="Serie D">Série D</option>
+          </select>
+          <label for="time">Qual é o seu time do coração?</label>
+          <input type="text" id="time" name="time" required minlength="3">
         </fieldset>
+        <button type="submit" class="btn btn-primario btn-magnetico">Fazer cadastro</button>
+        <p id="mensagem" aria-live="polite"></p>
+      </form>
+    </section>
+  </main>
 
-        <button type="submit">Fazer cadastro</button>
+  <footer class="rodape">
+    <p>FutBrasil — Projeto Integrador de Guilherme Henrique</p>
+    <a href="#inicio" class="btn btn-contorno">Voltar ao topo ↑</a>
+  </footer>
 
-        <p id="mensagem"></p>
-
-    </form>
-</section>
-
-<script src="script.js"></script>
-</main>
-<footer>
-<a href="https://ge.globo.com/pe/futebol/noticia/2026/06/03/dividas-dos-clubes-brasileiros-11-times-superam-r-1-bilhao-veja-ranking.ghtml" target="_blank" rel="noopener noreferrer">
-    Acompanhe a lista
-</a>
-</footer>
+  <script src="js/logica.js" defer></script>
+  <script src="js/script.js" defer></script>
+  <script src="js/interacoes.js" defer></script>
 </body>
-</html> 
-
+</html>
