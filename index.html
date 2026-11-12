@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="js/tema.js"></script>
   <title>FutBrasil — Projeto Integrador</title>
   <link rel="stylesheet" href="css/reset.css">
   <link rel="stylesheet" href="css/style.css">
@@ -20,6 +21,10 @@
         <li><a href="#desempenho">Desempenho</a></li>
         <li><a href="#login">Cadastro</a></li>
       </ul>
+      <button type="button" id="alternarTema" class="btn btn-tema" aria-label="Ativar modo escuro" aria-pressed="false" title="Ativar modo escuro">
+        <svg class="icone-lua" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"/></svg>
+        <svg class="icone-sol" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg>
+      </button>
     </nav>
     <section id="inicio" class="hero">
       <h1>FutBrasil</h1>
@@ -56,9 +61,8 @@
       <a class="btn btn-contorno" href="https://ge.globo.com/pe/futebol/noticia/2026/06/03/dividas-dos-clubes-brasileiros-11-times-superam-r-1-bilhao-veja-ranking.ghtml" target="_blank" rel="noopener noreferrer">Ver lista completa</a>
     </section>
 
-    <!-- Aula 09: lógica com prompt, if/else, switch, for...of, do...while -->
     <section id="analise" class="secao revelar">
-      <h2>Analisador de dívidas <small>Aula 09</small></h2>
+      <h2>Analisador de dívidas</h2>
       <p>Clique no botão, responda as perguntas e veja o resultado aqui e no Console (F12).</p>
       <div class="acoes">
         <button type="button" id="btnAnalisar" class="btn btn-primario btn-magnetico">Rodar análise</button>
@@ -67,9 +71,8 @@
       <pre id="saidaLogica" class="saida">O resultado aparecerá aqui.</pre>
     </section>
 
-    <!-- Aula 11: funções, map/filter/reduce e DOM -->
     <section id="desempenho" class="secao revelar">
-      <h2>Desempenho dos clubes <small>Aula 11</small></h2>
+      <h2>Desempenho dos clubes</h2>
       <div class="filtros" id="filtros">
         <button type="button" class="btn btn-chip ativo" data-faixa="todos">Todos</button>
         <button type="button" class="btn btn-chip" data-faixa="faixa-alto">Alto</button>

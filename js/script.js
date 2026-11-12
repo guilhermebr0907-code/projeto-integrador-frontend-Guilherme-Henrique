@@ -1,128 +1,116 @@
-
-const formulario = document.getElementById("formCadastro");
-
-formulario.addEventListener("submit", function(event) {
-
-    event.preventDefault();
-
-    const nome = document.getElementById("nome").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const divisao = document.getElementById("divisao").value;
-    const time = document.getElementById("time").value;
-
-    const usuario = {
-        nome: nome,
-        email: email,
-        divisao: divisao,
-        time: time
-    };
-
-    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
-
-    usuarios.push(usuario);
-
-  
-    localStorage.setItem("usuarios", JSON.stringify(usuarios));
-
-
-    document.getElementById("mensagem").textContent =
-        "Cadastro realizado com sucesso!";
-
-    document.getElementById("mensagem").style.color = "#4caf50";
-
-
-    formulario.reset();
-
-});
-
-const clubes = [
-    { nome: "Flamengo",    estado: "RJ", fundacao: 1895 },
-    { nome: "Corinthians", estado: "SP", fundacao: 1910 },
-    { nome: "Atlético-MG", estado: "MG", fundacao: 1908 },
-    { nome: "Sport",       estado: "PE", fundacao: 1905 },
-    { nome: "Bahia",       estado: "BA", fundacao: 1931 },
-    { nome: "Fortaleza",   estado: "CE", fundacao: 1918 },
-    { nome: "Cuiabá",      estado: "MT", fundacao: 2001 }
+const clubesDesempenho = [
+  { nome: "Palmeiras", pontos: 70, jogos: 38, serie: "A" },
+  { nome: "Flamengo", pontos: 79, jogos: 38, serie: "A" },
+  { nome: "Cruzeiro", pontos: 66, jogos: 38, serie: "A" },
+  { nome: "Corinthians", pontos: 52, jogos: 38, serie: "A" },
+  { nome: "Coritiba", pontos: 64, jogos: 38, serie: "B" },
+  { nome: "Sport", pontos: 30, jogos: 38, serie: "A" },
+  { nome: "Náutico", pontos: 40, jogos: 19, serie: "C" }
 ];
 
-function calcularIdade(anoFundacao, anoReferencia = 2026) {
-    return anoReferencia - anoFundacao;
+function calcularAproveitamento(clube, pontosPorVitoria = 3) {
+  const maximo = clube.jogos * pontosPorVitoria;
+  return maximo === 0 ? 0 : Math.round((clube.pontos / maximo) * 100);
 }
 
-function classificarFaixa(idade) {
-    if (idade >= 120) {
-        return "historico";
-    } else if (idade >= 100) {
-        return "centenario";
-    } else if (idade >= 75) {
-        return "tradicional";
-    } else {
-        return "jovem";
-    }
+function classificarAproveitamento(percentual) {
+  if (percentual >= 60) {
+    return { rotulo: "Alto", classe: "faixa-alto" };
+  } else if (percentual >= 45) {
+    return { rotulo: "Médio", classe: "faixa-medio" };
+  } else {
+    return { rotulo: "Baixo", classe: "faixa-baixo" };
+  }
 }
 
-function formatarIdade(idade) {
-    return `${idade} anos de história`;
+function criarFiltroMinimo(minimo) {
+  return (item) => item.aproveitamento >= minimo;
 }
 
-function criarCartaoClube(clube) {
-    const cartao = document.createElement("article");
-    cartao.classList.add("cartao-clube", `faixa-${clube.faixa}`);
+const resultados = clubesDesempenho.map((clube) => {
+  const aproveitamento = calcularAproveitamento(clube);
+  return { ...clube, aproveitamento, ...classificarAproveitamento(aproveitamento) };
+});
 
-    const titulo = document.createElement("h3");
-    titulo.textContent = `${clube.nome} (${clube.estado})`;
+const clubesAltos = resultados.filter(criarFiltroMinimo(60));
 
-    const detalhe = document.createElement("p");
-    detalhe.textContent = `Fundado em ${clube.fundacao} — ${formatarIdade(clube.idade)}`;
+const mediaAproveitamento = resultados.reduce((soma, r) => soma + r.aproveitamento, 0) / resultados.length;
 
-    const rotulo = document.createElement("span");
-    rotulo.classList.add("rotulo-faixa");
-    rotulo.textContent = clube.faixa;
+const ordenados = [...resultados].sort((a, b) => b.aproveitamento - a.aproveitamento);
 
-    cartao.append(titulo, detalhe, rotulo);
-    return cartao;
+function criarCardClube(item) {
+  const card = document.createElement("article");
+  card.classList.add("item-clube", item.classe);
+  card.dataset.faixa = item.classe;
+
+  const titulo = document.createElement("h3");
+  titulo.textContent = item.nome;
+  const info = document.createElement("p");
+  info.textContent = `Série ${item.serie} • ${item.pontos} pts em ${item.jogos} jogos`;
+  const aprov = document.createElement("p");
+  aprov.textContent = `Aproveitamento: ${item.aproveitamento}%`;
+  const rotulo = document.createElement("span");
+  rotulo.classList.add("rotulo");
+  rotulo.textContent = item.rotulo;
+
+  card.append(titulo, info, aprov, rotulo);
+  return card;
 }
 
-function mostrarResultado() {
-    const areaResultado = document.querySelector("#resultado");
-    if (areaResultado === null) {
-        console.error('Elemento "#resultado" não encontrado no HTML.');
-        return;
-    }
+function mostrarResultados() {
+  const area = document.querySelector("#resultado");
+  const resumo = document.querySelector("#resumo");
+  if (area === null || resumo === null) {
+    console.error("Área de resultado não encontrada.");
+    return;
+  }
+  ordenados.forEach((item, i) => {
+    const card = criarCardClube(item);
+    card.style.animationDelay = `${i * 70}ms`;
+    area.append(card);
+  });
 
-    const clubesProcessados = clubes.map(function (clube) {
-        const idade = calcularIdade(clube.fundacao);
-        return { ...clube, idade: idade, faixa: classificarFaixa(idade) };
+  const porSerie = resultados.reduce((grupos, r) => {
+    grupos[r.serie] = (grupos[r.serie] ?? 0) + 1;
+    return grupos;
+  }, {});
+  const textoSeries = Object.entries(porSerie).map(([s, n]) => `Série ${s}: ${n}`).join(" · ");
+
+  resumo.textContent = `Média de aproveitamento: ${mediaAproveitamento.toFixed(1)}% • ${clubesAltos.length} clube(s) com desempenho alto • ${textoSeries}`;
+}
+
+function ativarFiltros() {
+  const filtros = document.querySelector("#filtros");
+  if (filtros === null) return;
+  filtros.addEventListener("click", (evento) => {
+    const botao = evento.target.closest("button[data-faixa]");
+    if (botao === null) return;
+    filtros.querySelectorAll("button").forEach((b) => b.classList.remove("ativo"));
+    botao.classList.add("ativo");
+    const faixa = botao.dataset.faixa;
+    document.querySelectorAll(".item-clube").forEach((card) => {
+      card.classList.toggle("escondido", faixa !== "todos" && card.dataset.faixa !== faixa);
     });
-
-    const ranking = [...clubesProcessados].sort(function (a, b) {
-        return b.idade - a.idade;
-    });
-
-    const centenarios = clubesProcessados.filter(function (clube) {
-        return clube.idade >= 100;
-    });
-
-    const somaIdades = clubesProcessados.reduce(function (acumulado, clube) {
-        return acumulado + clube.idade;
-    }, 0);
-    const media = somaIdades / clubesProcessados.length;
-
-    areaResultado.textContent = ""; 
-    const titulo = document.createElement("h2");
-    titulo.textContent = "Clubes por tradição";
-    areaResultado.append(titulo);
-
-    for (const clube of ranking) {
-        areaResultado.append(criarCartaoClube(clube));
-    }
-
-    const resumo = document.createElement("p");
-    resumo.classList.add("resumo-clubes");
-    resumo.textContent =
-        `${centenarios.length} de ${clubesProcessados.length} clubes têm 100 anos ou mais | ` +
-        `idade média: ${media.toFixed(1)} anos`;
-    areaResultado.append(resumo);
+  });
 }
 
-mostrarResultado();
+mostrarResultados();
+ativarFiltros();
+
+const formulario = document.getElementById("formCadastro");
+if (formulario !== null) {
+  formulario.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const usuario = {
+      nome: document.getElementById("nome").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      divisao: document.getElementById("divisao").value,
+      time: document.getElementById("time").value.trim()
+    };
+    const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+    usuarios.push(usuario);
+    localStorage.setItem("usuarios", JSON.stringify(usuarios));
+    document.getElementById("mensagem").textContent = `Cadastro realizado com sucesso, ${usuario.nome}!`;
+    formulario.reset();
+  });
+}
