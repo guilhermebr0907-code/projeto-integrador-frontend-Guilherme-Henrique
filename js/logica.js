@@ -1,150 +1,169 @@
-const ANO_ANALISE = 2026;
-
-const clubesFutebol = [
-    { nome: "Flamengo",    estado: "RJ", fundacao: 1895 },
-    { nome: "Corinthians", estado: "SP", fundacao: 1910 },
-    { nome: "Atlético-MG", estado: "MG", fundacao: 1908 },
-    { nome: "Sport",       estado: "PE", fundacao: 1905 },
-    { nome: "Bahia",       estado: "BA", fundacao: 1931 },
-    { nome: "Fortaleza",   estado: "CE", fundacao: 1918 },
-    { nome: "Cuiabá",      estado: "MT", fundacao: 2001 }
+const clubesDividas = [
+  { nome: "Corinthians", divida: 2.75, serie: "A" },
+  { nome: "Atlético-MG", divida: 2.66, serie: "A" },
+  { nome: "São Paulo", divida: 2.45, serie: "A" },
+  { nome: "Cruzeiro", divida: 1.10, serie: "A" },
+  { nome: "Vasco", divida: 1.90, serie: "A" },
+  { nome: "Santos", divida: 0.95, serie: "B" },
+  { nome: "Náutico", divida: 0.25, serie: "C" },
+  { nome: "Santa Cruz", divida: 0.18, serie: "D" }
 ];
 
-function lerIdadeMinima() {
-    const resposta = prompt("Mostrar clubes com pelo menos quantos anos de história? (0 a 200)");
+const saidaLogica = document.querySelector("#saidaLogica");
 
-    if (resposta === null) {                 
-        alert("Análise cancelada.");
-        return null;
-    }
-    if (resposta.trim() === "") {            
-        alert("Você não digitou nada.");
-        return null;
-    }
-
-    const idadeMinima = Number(resposta.trim().replace(",", "."));
-    if (Number.isNaN(idadeMinima)) {     
-        alert("Digite apenas números, por exemplo 100");
-        return null;
-    }
-    if (idadeMinima < 0 || idadeMinima > 200) {   
-        alert("Digite um valor entre 0 e 200.");
-        return null;
-    }
-    return idadeMinima;
+function mostrarSaida(texto) {
+  if (saidaLogica !== null) {
+    saidaLogica.textContent = texto;
+  }
 }
 
-function classificarTradicao(idade) {
-    if (idade >= 120) {
-        return "Histórico";
-    } else if (idade >= 100) {
-        return "Centenário";
-    } else if (idade >= 75) {
-        return "Tradicional";
-    } else {
-        return "Jovem";
-    }
+function classificarDivida(divida) {
+  if (divida >= 2.5) {
+    return "Crítica";
+  } else if (divida >= 1.5) {
+    return "Alta";
+  } else if (divida >= 0.5) {
+    return "Moderada";
+  } else {
+    return "Controlada";
+  }
 }
 
-function descreverRegiao(estado) {
-    let regiao;
-    switch (estado) {
-        case "RJ":
-            regiao = "Sudeste";
-            break;
-        case "SP":
-            regiao = "Sudeste";
-            break;
-        case "MG":
-            regiao = "Sudeste";
-            break;
-        case "PE":
-            regiao = "Nordeste";
-            break;
-        case "BA":
-            regiao = "Nordeste";
-            break;
-        case "CE":
-            regiao = "Nordeste";
-            break;
-        case "MT":
-            regiao = "Centro-Oeste";
-            break;
-        default:
-            regiao = "Região não cadastrada";
-    }
-    return regiao;
+function descreverSerie(serie) {
+  let mensagem = "";
+  switch (serie) {
+    case "A":
+      mensagem = "Elite do futebol nacional";
+      break;
+    case "B":
+      mensagem = "Briga pelo acesso à Série A";
+      break;
+    case "C":
+      mensagem = "Terceira divisão nacional";
+      break;
+    case "D":
+      mensagem = "Porta de entrada do Brasileirão";
+      break;
+    default:
+      mensagem = "Série desconhecida";
+      break;
+  }
+  return mensagem;
 }
 
-function analisarClubes(idadeMinima) {
-    let contadorAcimaMinimo = 0;           
-    let somaIdades = 0;                  
-    let maisAntigo = clubesFutebol[0];    
-    const relatorio = [];
+function lerMinimo() {
+  const resposta = prompt("Dívida mínima para destacar (em bilhões, de 0 a 5):", "1.5");
+  if (resposta === null) {
+    return null;
+  }
+  const textoLimpo = resposta.trim().replace(",", ".");
+  if (textoLimpo === "") {
+    alert("Você não digitou nada. Usando 1.5 como padrão.");
+    return 1.5;
+  }
+  const minimo = Number(textoLimpo);
+  if (Number.isNaN(minimo)) {
+    alert("Isso não é um número. Usando 1.5 como padrão.");
+    return 1.5;
+  }
+  if (minimo < 0 || minimo > 5) {
+    alert("Fora da faixa (0 a 5). Usando 1.5 como padrão.");
+    return 1.5;
+  }
+  return minimo;
+}
 
-    for (const clube of clubesFutebol) {
-        const idade = ANO_ANALISE - clube.fundacao;
-        const faixa = classificarTradicao(idade);
-        const regiao = descreverRegiao(clube.estado);
+function analisarDividas(minimo) {
+  let acimaDoMinimo = 0;
+  let somaDividas = 0;
+  let maiorDevedor = clubesDividas[0];
+  const relatorio = [];
 
-        if (idade >= idadeMinima) {
-            contadorAcimaMinimo++;
-        }
-        somaIdades += idade;
-        if (clube.fundacao < maisAntigo.fundacao) {
-            maisAntigo = clube;
-        }
-
-        relatorio.push({
-            "Clube": clube.nome,
-            "Estado": clube.estado,
-            "Região": regiao,
-            "Fundação": clube.fundacao,
-            "Idade": idade,
-            "Faixa": faixa
-        });
+  for (const clube of clubesDividas) {
+    const nivel = classificarDivida(clube.divida);
+    somaDividas += clube.divida;
+    if (clube.divida >= minimo) {
+      acimaDoMinimo++;
     }
+    if (clube.divida > maiorDevedor.divida) {
+      maiorDevedor = clube;
+    }
+    relatorio.push({
+      clube: clube.nome,
+      divida: `R$ ${clube.divida.toFixed(2)} bi`,
+      nivel: nivel,
+      serie: descreverSerie(clube.serie)
+    });
+  }
 
-    const media = somaIdades / clubesFutebol.length;
+  const media = somaDividas / clubesDividas.length;
+  console.table(relatorio);
 
-    console.log("===== Relatório de clubes =====");
-    console.table(relatorio);
-    console.log(`Clubes com ${idadeMinima} anos ou mais: ${contadorAcimaMinimo} de ${clubesFutebol.length}`);
-    console.log(`Idade média: ${media.toFixed(1)} anos`);
-    console.log(`Clube mais antigo: ${maisAntigo.nome} (fundado em ${maisAntigo.fundacao})`);
+  const linhas = relatorio.map((r) => `• ${r.clube}: ${r.divida} — ${r.nivel} (${r.serie})`);
+  return [
+    `Mínimo informado: R$ ${minimo.toFixed(2)} bi`,
+    "",
+    ...linhas,
+    "",
+    `Clubes acima do mínimo: ${acimaDoMinimo} de ${clubesDividas.length}`,
+    `Dívida total: R$ ${somaDividas.toFixed(2)} bi`,
+    `Média: R$ ${media.toFixed(2)} bi`,
+    `Maior devedor: ${maiorDevedor.nome} (R$ ${maiorDevedor.divida.toFixed(2)} bi)`
+  ].join("\n");
 }
 
 function consultarClubes() {
-    let entrada = prompt('Digite o nome de um clube para consultar (ou "sair"):');
+  const consultas = [];
+  let comando = prompt('Digite o nome de um clube para consultar (ou "sair"):') ?? "sair";
+  while (comando.trim().toLowerCase() !== "sair") {
+    const busca = comando.trim().toLowerCase();
+    const encontrado = clubesDividas.find((c) => c.nome.toLowerCase() === busca);
+    consultas.push(encontrado
+      ? `${encontrado.nome}: dívida ${classificarDivida(encontrado.divida)}`
+      : `"${comando}" não está na lista`);
+    comando = prompt('Outro clube (ou "sair"):') ?? "sair";
+  }
+  return consultas;
+}
 
-    while (entrada !== null && entrada.trim().toLowerCase() !== "sair") {
-        const busca = entrada.trim().toLowerCase();
-        const encontrado = clubesFutebol.find(function (clube) {
-            return clube.nome.toLowerCase() === busca;
-        });
+function rodarAnalise() {
+  const minimo = lerMinimo();
+  if (minimo === null) {
+    mostrarSaida("Análise cancelada.");
+    return;
+  }
+  const texto = analisarDividas(minimo);
+  const consultas = consultarClubes();
+  const extra = consultas.length > 0 ? `\n\nConsultas:\n${consultas.join("\n")}` : "";
+  mostrarSaida(texto + extra);
+  console.log(texto + extra);
+}
 
-        if (encontrado) {
-            const idade = ANO_ANALISE - encontrado.fundacao;
-            console.log(`${encontrado.nome} (${encontrado.estado}, ${descreverRegiao(encontrado.estado)}): ${idade} anos — ${classificarTradicao(idade)}`);
-        } else {
-            console.log(`Clube "${entrada}" não encontrado na lista.`);
-        }
-
-        entrada = prompt('Outro clube? (ou "sair"):');
+function menuInterativo() {
+  let opcao = "";
+  let ultimaSaida = "Menu encerrado.";
+  do {
+    opcao = prompt("Menu FutBrasil:\n1 — Listar clubes\n2 — Resumir dívidas\n3 — Sair") ?? "3";
+    switch (opcao.trim()) {
+      case "1":
+        ultimaSaida = clubesDividas.map((c) => `${c.nome} (Série ${c.serie})`).join("\n");
+        alert(ultimaSaida);
+        break;
+      case "2":
+        ultimaSaida = analisarDividas(0);
+        alert(ultimaSaida);
+        break;
+      case "3":
+        break;
+      default:
+        alert("Opção inválida.");
+        break;
     }
-    console.log("Consulta encerrada.");
+  } while (opcao.trim() !== "3");
+  mostrarSaida(ultimaSaida);
 }
 
-function executarAnalise() {
-    const idadeMinima = lerIdadeMinima();
-    if (idadeMinima === null) {
-        return; 
-    }
-    analisarClubes(idadeMinima);
-    consultarClubes();
-}
-
-const botaoAnalise = document.querySelector("#btnAnalise");
-if (botaoAnalise !== null) {
-    botaoAnalise.addEventListener("click", executarAnalise);
-}
+const btnAnalisar = document.querySelector("#btnAnalisar");
+const btnMenu = document.querySelector("#btnMenu");
+if (btnAnalisar !== null) btnAnalisar.addEventListener("click", rodarAnalise);
+if (btnMenu !== null) btnMenu.addEventListener("click", menuInterativo);
